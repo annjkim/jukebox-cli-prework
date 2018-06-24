@@ -19,58 +19,42 @@ I accept the following commands:
 - exit : exits this program
 HELP
 
-  puts help
+def list(songs)
+  songs.each.with_index { |song, i|
+    puts "#{i+1} #{song}"
+  }
 end
 
-help 
-
-def list(songs) 
-  songs.each_with_index { |item, index|
-    puts "#{index+1}. #{item}" }
-end 
-
-list(songs)
-
 def play(songs)
-  puts "Please enter a song name or number:"
-  user_response = gets.downcase.chomp 
-  
-  if (1..9).to_a.include?(user_response.to_i)
-    puts "Playing #{songs[user_response.to_i - 1]}"
-    elsif songs.include?(user_response)
-    puts "Playing #{user_response}"
-  else 
-    puts "Invalid input, please try again"
-  end 
-end 
-
-play(songs)
+  selection = gets.downcase.strip
+  song_output = "Invalid input, please try again"
+  songs.each.with_index { |song, i|
+    song_output = "#{i+1} #{song}" if(selection == song.downcase || selection == "#{i+1}")
+  }
+  puts song_output
+end
 
 def exit_jukebox
   puts "Goodbye"
-end 
+end
 
 def run(songs)
-  #help
-  command = "" 
-  while command  
   puts "Please enter a command:"
-  command = gets.downcase.strip  
-  case command 
-    when 'list'
-      list(songs)
-      when 'play'
+  command = gets.downcase.strip
+
+  while command != "exit"
+    case command
+      when "help"
+        help
+      when "list"
         list(songs)
+      when "play"
         play(songs)
-      when 'help'
-        help 
-      when 'exit'
-        exit_jukebox
-        break 
-      else 
-        help 
-      end 
-    end 
-  end 
-  run(songs)
-    
+      else
+        puts "Invalid command, please try again"
+    end
+    puts "Please enter a command:"
+    command = gets.downcase.strip
+  end
+  exit_jukebox
+end
