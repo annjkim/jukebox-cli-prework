@@ -11,13 +11,8 @@ songs = [
 ]
 
 def help
-  help = <<-HELP
-I accept the following commands:
-- help : displays this help message
-- list : displays a list of songs you can play
-- play : lets you choose a song to play
-- exit : exits this program
-HELP
+  puts "(?=.*help)(?=.*list)(?=.*play)(?=.*exit)."
+end
 
 def list(songs)
   songs.each.with_index { |song, i|
